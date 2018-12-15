@@ -328,4 +328,14 @@ $(document).ready(function() {
 
   initSidebarDimension();
 
+  // 增加设置背景图片的效果，配合custom.styl下的动画进行渐入过渡，优化体验
+  var background = new Image();
+  background.src = 'https://source.unsplash.com/random/1600x900';
+  background.onload = function () {
+      console.log('Background load complete!');
+      var loadbackground = document.body;
+      loadbackground.style.backgroundImage = 'url(' + background.src + ')';
+      loadbackground.style.animationName = 'fadein';
+  }
+
 });

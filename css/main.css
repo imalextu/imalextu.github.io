@@ -1810,11 +1810,6 @@ pre .javascript .function {
   display: inline-block;
   margin: 0.8em 2em 0 2em;
 }
-#QR > div:hover p {
-  animation: roll 0.1s infinite linear;
-  -webkit-animation: roll 0.1s infinite linear;
-  -moz-animation: roll 0.1s infinite linear;
-}
 @-moz-keyframes roll {
   from {
     -webkit-transform: rotateZ(30deg);
@@ -2068,7 +2063,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #a74503;
+  background: #6783f5;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2843,12 +2838,47 @@ embed {
   display: inline-block;
 }
 body {
-  background-image: url("https://source.unsplash.com/random/1600x900");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: 50% 50%;
+  animation-delay: 0s;
+  animation-duration: 3.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease;
 }
 .container {
   background: #fff;
-  opacity: 0.9;
+  opacity: 1;
+}
+@-moz-keyframes fadein {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+@-o-keyframes fadein {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+@keyframes fadein {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.9;
+  }
 }

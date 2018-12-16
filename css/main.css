@@ -1716,23 +1716,20 @@ pre .javascript .function {
   top: 2px;
 }
 .post-nav-item .fa {
-  position: absolute;
-  top: 8px;
-  left: 0;
   font-size: 12px;
+  margin-right: 5px;
 }
 .post-nav-next a {
-  padding-left: 15px;
+  padding-left: 5px;
 }
 .post-nav-prev {
   text-align: right;
 }
 .post-nav-prev a {
-  padding-right: 15px;
+  padding-right: 5px;
 }
 .post-nav-prev .fa {
-  right: 0;
-  left: auto;
+  margin-left: 5px;
 }
 .posts-expand .post-eof {
   display: block;
@@ -2063,7 +2060,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #6783f5;
+  background: #f42f50;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2338,9 +2335,6 @@ pre .javascript .function {
     -o-transform: scale(1.1);
     transform: scale(1.1);
   }
-}
-.fa {
-  font-family: FontAwesome !important;
 }
 .local-search-pop-overlay {
   position: fixed;

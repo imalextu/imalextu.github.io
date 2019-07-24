@@ -342,7 +342,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/12/2019-3-12-1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/18/接口规范/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alex Tu">
@@ -362,7 +362,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/03/12/2019-3-12-1/" class="post-title-link" itemprop="http://yoursite.com/index.html">手动剃须刀原来真的能刮破皮肤，今天第一次，后面还是用自动的吧。</a>
+                <a href="/2019/06/18/接口规范/" class="post-title-link" itemprop="http://yoursite.com/index.html">接口规范</a>
               
             
           </h1>
@@ -387,7 +387,7 @@
                 
               
 
-              <time title="创建时间：2019-03-12 09:08:14 / 修改时间：09:08:46" itemprop="dateCreated datePublished" datetime="2019-03-12T09:08:14+08:00">2019-03-12</time>
+              <time title="创建时间：2019-06-18 22:29:41 / 修改时间：22:39:34" itemprop="dateCreated datePublished" datetime="2019-06-18T22:29:41+08:00">2019-06-18</time>
             
 
             
@@ -406,8 +406,449 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/03/12/2019-3-12-1/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/03/12/2019-3-12-1/" itemprop="commentCount"></span>
+                <a href="/2019/06/18/接口规范/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/06/18/接口规范/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="API-设计规范"><a href="#API-设计规范" class="headerlink" title="API 设计规范"></a>API 设计规范</h2><ul>
+<li>所有的<strong>路径都是资源</strong>，例如：/users、/messages</li>
+<li>所有操作使用 http method 表示<ul>
+<li>post =&gt; 创建</li>
+<li>get =&gt; 获取</li>
+<li>put =&gt; 更新</li>
+<li>delete =&gt; 删除</li>
+</ul>
+</li>
+<li>路径中不存在 action，<strong>错误</strong>示例： /users/:userId/update</li>
+</ul>
+<h3 id="常用示例"><a href="#常用示例" class="headerlink" title="常用示例"></a>常用示例</h3><h4 id="GET-method"><a href="#GET-method" class="headerlink" title="GET method"></a>GET method</h4><p>  读取资源，从服务端<strong>返回相应资源</strong>。</p>
+<ul>
+<li>GET /apps（获取所有应用）</li>
+<li>GET /apps/:appId（获取指定应用）</li>
+<li>GET /users/:userId/apps（获取<strong>指定用户</strong>的所有应用）</li>
+<li>GET /apps?userId=255223（获取<strong>指定用户</strong>的所有应用）</li>
+<li>GET /orders?page=2&amp;per_page=100（每页100个订单，返回第2页的100个订单）</li>
+<li>GET /orders?limit=25&amp;offset=50（从第50个开始，返回25个订单）</li>
+</ul>
+<h4 id="POST-method"><a href="#POST-method" class="headerlink" title="POST method"></a>POST method</h4><p>  创建资源，创建成功后，<strong>返回创建的资源</strong>。</p>
+<ul>
+<li><p>POST /apps（创建应用）</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// HTTP Request Body</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"appName"</span>,</span><br><span class="line">  <span class="attr">"pkg"</span>: <span class="string">"http://fds.api.com/bucket/app.pkg"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>POST /users/:userId/apps（创建指定用户下的应用）</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// HTTP Request Body</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"appName"</span>,</span><br><span class="line">  <span class="attr">"pkg"</span>: <span class="string">"http://fds.api.com/bucket/app.apk"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="PATCH-method"><a href="#PATCH-method" class="headerlink" title="PATCH method"></a>PATCH method</h4><p>  部分更新：提供资源的部分数据进行更新，更新成功后，<strong>返回更新后的资源</strong>。</p>
+<ul>
+<li><p>PATCH /apps/:appId（更新应用名称）</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// HTTP Request Body</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"appName"</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>PATCH /messages（<strong>批量</strong>更新消息为已读）</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// HTTP Request Body</span><br><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"id"</span>: <span class="string">"88231"</span>,</span><br><span class="line">    <span class="attr">"readed"</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"id"</span>: <span class="string">"88232"</span>,</span><br><span class="line">    <span class="attr">"readed"</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;  </span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="PUT-method"><a href="#PUT-method" class="headerlink" title="PUT method"></a>PUT method</h4><p>  整体更新：提供全部数据，进行覆盖式更新；如果相应 ID 的数据不存在，可以进行创建；更新成功后，<strong>返回更新的资源</strong>。</p>
+<ul>
+<li><p>PUT /apps/:appId（整体更新应用）</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// HTTP Request Body 提供应用的所有数据</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"appName"</span>,</span><br><span class="line">  <span class="attr">"pkg"</span>: <span class="string">"http://fds.api.com/bucket/app.pkg"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>PUT /apps（<strong>批量</strong>更新应用）</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// HTTP Request Body</span><br><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"id"</span>: <span class="string">"8823"</span>,</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"appName"</span>,</span><br><span class="line">    <span class="attr">"pkg"</span>: <span class="string">"http://fds.api.com/bucket/app.pkg"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"id"</span>: <span class="string">"8229"</span>,</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"alipay"</span>,</span><br><span class="line">    <span class="attr">"pkg"</span>: <span class="string">"http://fds.api.com/bucket/app.pkg"</span></span><br><span class="line">  &#125;  </span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="DELETE-method"><a href="#DELETE-method" class="headerlink" title="DELETE method"></a>DELETE method</h4><p>  删除资源，从服务端删除相应资源，<strong>并返回删除的资源</strong>。</p>
+<ul>
+<li>DELETE /apps/:appId（删除指定应用）</li>
+<li>DELETE /apps?ids=8823,8824（<strong>批量</strong>删除应用  ）</li>
+<li>DELETE /apps?userId=252262707&amp;ids=8823（删除<strong>指定用户</strong>的指定应用）</li>
+<li>DELETE /users/:userId/apps?ids=8823（删除<strong>指定用户</strong>的指定应用）</li>
+</ul>
+<h2 id="响应规则"><a href="#响应规则" class="headerlink" title="响应规则"></a>响应规则</h2><p>请求响应状态码，一共5种，分别是请求成功、客服端错误、服务端错误、认证失败、权限错误。</p>
+<p>为什么分为这五种，请求成功自成一类就不说了。响应错误分为客户端错误以及服务端错误两大类，这是为了后期更方便地进行维护，快速定位问题出在前端还是后端。而将认证失败和权限错误单独抽出来是因为这两种错误出现频繁且前端相应的处理逻辑比较特殊。</p>
+<ul>
+<li><p>请求成功</p>
+<ul>
+<li>HTTP Status Code 200</li>
+<li><p>HTTP Response Body</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"data"</span>: &#123;</span><br><span class="line">    // All data should be here.</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>客服端错误</p>
+<ul>
+<li>HTTP Status Code 400</li>
+<li><p>HTTP Response Body</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"error"</span>: &#123;</span><br><span class="line">    // 该 code 标识错误的唯一性，浏览器端可以根据该 code 做 UI 层的展现</span><br><span class="line">    "code": 4411,</span><br><span class="line">    "message": "Name should start by a letter."   </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>服务端错误</p>
+<ul>
+<li>HTTP Status Code 500</li>
+<li><p>HTTP Response Body</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"error"</span>: &#123;</span><br><span class="line">    // 该 code 标识错误的唯一性，浏览器端可以根据该 code 做 UI 层的展现</span><br><span class="line">    "code": 5502,</span><br><span class="line">    "message": "Server is unavailable."   </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>认证错误</p>
+<ul>
+<li>HTTP Status Code 401</li>
+<li><p>HTTP Response Body</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"error"</span>: &#123;</span><br><span class="line">    // 该 code 标识错误的唯一性，浏览器端可以根据该 code 做 UI 层的展现</span><br><span class="line">    "code": 4401,</span><br><span class="line">    "message": "Your token has expired."   </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>权限错误</p>
+<ul>
+<li>HTTP Status Code 403</li>
+<li><p>HTTP Response Body</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"error"</span>: &#123;</span><br><span class="line">    // 该 code 标识错误的唯一性，浏览器端可以根据该 code 做 UI 层的展现</span><br><span class="line">    "code": 4403,</span><br><span class="line">    "message": "You have no right to delete user."</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/18/git工作流/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alex Tu">
+      <meta itemprop="description" content="欢迎光临| ᐕ)୨">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2019✈飞行手册✈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/06/18/git工作流/" class="post-title-link" itemprop="http://yoursite.com/index.html">git工作流</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-18 22:18:43 / 修改时间：22:29:24" itemprop="dateCreated datePublished" datetime="2019-06-18T22:18:43+08:00">2019-06-18</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/18/git工作流/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/06/18/git工作流/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="git工作流"><a href="#git工作流" class="headerlink" title="git工作流"></a>git工作流</h1><p>先介绍一下业务背景，我们的项目由四五个同学同步进行开发，难免会出现代码冲突，由此设计了这一套分支管理方案。该方案基于<a href="http://nvie.com/posts/a-successful-git-branching-model/" target="_blank" rel="noopener">git分支管理最佳实践</a>。</p>
+<p>如有分支管理优化意见，欢迎<strong>共同探讨</strong>。</p>
+<h3 id="分支类型"><a href="#分支类型" class="headerlink" title="分支类型"></a>分支类型</h3><ul>
+<li>master<ul>
+<li>主分支，提供发布的稳定版。</li>
+<li>仅限合并 develop、hotfix-* 分支</li>
+</ul>
+</li>
+<li>develop<ul>
+<li>开发分支，提供最新的开发版。</li>
+<li>仅限合并 feature-*、hotfix-* 分支</li>
+</ul>
+</li>
+<li>staging<ul>
+<li>测试分支，提供最新的测试版。</li>
+<li>仅限合并 feature-*、hotfix-* 分支</li>
+</ul>
+</li>
+<li>feature-*<ul>
+<li>特性分支或功能分支，用于开发具体需求。</li>
+<li>例如：feature-fds-bucket-list 文件存储的 bucket 列表开发。</li>
+</ul>
+</li>
+<li>hotfix-*<ul>
+<li>热性分支，用于修复线上严重bug</li>
+<li>仅限合并 master、develop、staging 分支</li>
+</ul>
+</li>
+</ul>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><h4 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基于 develop 创建新特性分支</span></span><br><span class="line">git checkout -b feature-* develop</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"commit description"</span></span><br><span class="line"><span class="comment"># many commit...</span></span><br></pre></td></tr></table></figure>
+<p>图示：</p>
+<p><img src="img/feature-branch.png?raw=true" alt=""></p>
+<h4 id="测试环境提测"><a href="#测试环境提测" class="headerlink" title="测试环境提测"></a>测试环境提测</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 合并特性分支到 staging</span></span><br><span class="line">git checkout staging</span><br><span class="line">git pull origin staging  <span class="comment"># 更新远程分支到本地</span></span><br><span class="line">git merge feature-* --no-ff  <span class="comment"># 如果有冲突，不确定保留哪部分，和相关同学确认</span></span><br><span class="line">git push origin staging  <span class="comment"># 每次提测，必须更新 origin/staging</span></span><br></pre></td></tr></table></figure>
+<p>单次提测图示：</p>
+<p><img src="img/staging-branch.png" alt=""></p>
+<p><strong>警告：</strong> 相关 bug 回到原 feature-* 分支进行修复，再次提测，<strong>切勿在staging分支上进行bug修复</strong>。多次提测图示：</p>
+<p><img src="img/staging-branch1.png" alt="staging1"></p>
+<h4 id="上线"><a href="#上线" class="headerlink" title="上线"></a>上线</h4><p><strong>必须满足</strong> 代码提测完成，达到稳定版本。<strong>否则</strong>不能将 feature-* 分支代码 merge 到 develop 分支上。</p>
+<p>如需 code review，请提交一个 merge request，参考 <a href="http://v9.git.n.xiaomi.com/Eco_FE/Docs/blob/master/docs/code-review/code-review.md" target="_blank" rel="noopener">merge request 创建流程</a>。</p>
+<p>图示：</p>
+<p><img src="img/develop-branch1.png" alt="develop-branch1"></p>
+<h4 id="上线并确认无误"><a href="#上线并确认无误" class="headerlink" title="上线并确认无误"></a>上线并确认无误</h4><p>同步代码到主干分支，并且打上 tag。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git pull origin master</span><br><span class="line">git merge develop --no-ff</span><br><span class="line">git tag -a v2.0.0 -m <span class="string">"tag description"</span>  <span class="comment"># 创建tag</span></span><br><span class="line">git push origin master  <span class="comment"># 更新 master</span></span><br><span class="line">git push origin v2.0.0  <span class="comment"># 同步 tag</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上线后删除特性分支</span></span><br><span class="line">git branch -D feature-*</span><br></pre></td></tr></table></figure>
+<p>图示：</p>
+<p><img src="img/master-branch.png" alt="master-branch1"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/19/前端算法题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alex Tu">
+      <meta itemprop="description" content="欢迎光临| ᐕ)୨">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2019✈飞行手册✈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/19/前端算法题/" class="post-title-link" itemprop="http://yoursite.com/index.html">前端算法题</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-19 21:33:14" itemprop="dateCreated datePublished" datetime="2019-05-19T21:33:14+08:00">2019-05-19</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/19/前端算法题/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/05/19/前端算法题/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -493,7 +934,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/12/2019-3-12/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/19/移动开发/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alex Tu">
@@ -513,7 +954,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/03/12/2019-3-12/" class="post-title-link" itemprop="http://yoursite.com/index.html">便利店的阿姨每次看到我去买早餐结账都要笑一下，我早饭买太少？。。。</a>
+                <a href="/2019/05/19/移动开发/" class="post-title-link" itemprop="http://yoursite.com/index.html">移动开发</a>
               
             
           </h1>
@@ -538,7 +979,7 @@
                 
               
 
-              <time title="创建时间：2019-03-12 09:07:29" itemprop="dateCreated datePublished" datetime="2019-03-12T09:07:29+08:00">2019-03-12</time>
+              <time title="创建时间：2019-05-19 21:32:38" itemprop="dateCreated datePublished" datetime="2019-05-19T21:32:38+08:00">2019-05-19</time>
             
 
             
@@ -555,7 +996,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-19 20:58:43" itemprop="dateModified" datetime="2019-05-19T20:58:43+08:00">2019-05-19</time>
+                <time title="修改时间：2019-06-18 22:41:49" itemprop="dateModified" datetime="2019-06-18T22:41:49+08:00">2019-06-18</time>
               
             
           </span>
@@ -569,8 +1010,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/03/12/2019-3-12/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/03/12/2019-3-12/" itemprop="commentCount"></span>
+                <a href="/2019/05/19/移动开发/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/05/19/移动开发/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -600,7 +1041,8 @@
       
         
           
-            
+            <p>积累一下移动开发</p>
+
           
         
       
@@ -656,7 +1098,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/02/2019-3-2-1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/08/技术栈/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alex Tu">
@@ -676,7 +1118,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/03/02/2019-3-2-1/" class="post-title-link" itemprop="http://yoursite.com/index.html">过去一年各色体验了不同交通工具上下班，自行车、电瓶车、汽车、地铁、城际，各有痛苦，o(╯□╰)o。</a>
+                <a href="/2018/12/08/技术栈/" class="post-title-link" itemprop="http://yoursite.com/index.html">技术栈&学习路线&常用库</a>
               
             
           </h1>
@@ -701,7 +1143,7 @@
                 
               
 
-              <time title="创建时间：2019-03-02 22:47:54" itemprop="dateCreated datePublished" datetime="2019-03-02T22:47:54+08:00">2019-03-02</time>
+              <time title="创建时间：2018-12-08 19:04:53" itemprop="dateCreated datePublished" datetime="2018-12-08T19:04:53+08:00">2018-12-08</time>
             
 
             
@@ -718,11 +1160,29 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-11 21:38:43" itemprop="dateModified" datetime="2019-03-11T21:38:43+08:00">2019-03-11</time>
+                <time title="修改时间：2019-05-31 09:11:05" itemprop="dateModified" datetime="2019-05-31T09:11:05+08:00">2019-05-31</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -732,8 +1192,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/03/02/2019-3-2-1/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/03/02/2019-3-2-1/" itemprop="commentCount"></span>
+                <a href="/2018/12/08/技术栈/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/08/技术栈/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -763,7 +1223,114 @@
       
         
           
-            
+            <p>结合部门以及业界主流技术栈，积累的一些库/包。可参考这里<a href="https://stateofjs.com/" target="_blank" rel="noopener">stateofjs</a>。</p>
+<table>
+<thead>
+<tr>
+<th>库名</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>react</td>
+<td>Front-end Frameworks</td>
+</tr>
+<tr>
+<td>react-router</td>
+<td>前端路由，react-router4和之前的概念很不一样</td>
+</tr>
+<tr>
+<td>redux</td>
+<td>Data Layer</td>
+</tr>
+<tr>
+<td>redux-saga</td>
+<td>Data Layer</td>
+</tr>
+<tr>
+<td>dva.js</td>
+<td>阿里出的，封装了redux、redux-saga、react-router，项目结构简单不少，就是和大把工具umi结合起来不太易用，建议直接用webpack。</td>
+</tr>
+<tr>
+<td>mobx</td>
+<td>数据管理，面向对象的，相对于学习redux+saga来说简单了许多，推荐使用，中文文档相对少一些。</td>
+</tr>
+<tr>
+<td>immutable</td>
+<td>在学。</td>
+</tr>
+<tr>
+<td>antd</td>
+<td>UI框架，内部系统用</td>
+</tr>
+<tr>
+<td>koa</td>
+<td>node后端框架，async语法简明清晰，但第三方的库相对express还是少一些。</td>
+</tr>
+<tr>
+<td>graphql</td>
+<td>一种用于 API 的查询语言，方便接口迭代、更新。需要后端配合，比较难推动。如果前端自己实现接口层（node等）的话还比较合适，但带来的收益相对引入的成本好像并不高多少。部门中部分小项目在用。</td>
+</tr>
+<tr>
+<td>taro</td>
+<td>react转多端，京东出的，更新以及支持都还可以，活动页/小项目可以直接用。</td>
+</tr>
+<tr>
+<td>flutter</td>
+<td>多端，最近很火，不知后续发展如何，纳入观察</td>
+</tr>
+<tr>
+<td>react-native</td>
+<td>Mobile，部门技术栈，待学习</td>
+</tr>
+<tr>
+<td>electron</td>
+<td>Desktop，部门技术栈，待学习</td>
+</tr>
+<tr>
+<td>CSS Modules</td>
+<td>给css加入了局部作用域和模块依赖</td>
+</tr>
+<tr>
+<td>classnames</td>
+<td>更灵活使用css类名</td>
+</tr>
+<tr>
+<td>Lodash</td>
+<td>JavaScript 实用工具库，防抖、节流、去重等等方法直接用。</td>
+</tr>
+<tr>
+<td>js-cookie</td>
+<td>获取cookie</td>
+</tr>
+<tr>
+<td>qs</td>
+<td>路由参数</td>
+</tr>
+<tr>
+<td>moment.js</td>
+<td>轻量级的JavaScript时间库</td>
+</tr>
+<tr>
+<td>core.js</td>
+<td>JavaScript的模块化标准库,兼容用</td>
+</tr>
+<tr>
+<td>ismobilejs</td>
+<td>判断是否是移动端，轻量可靠</td>
+</tr>
+<tr>
+<td>fastclick</td>
+<td>移动端点击事件</td>
+</tr>
+<tr>
+<td>antd相关用了很多react相关的库</td>
+<td><a href="https://ant.design/docs/react/recommendation-cn" target="_blank" rel="noopener">antd社区精选组件</a></td>
+</tr>
+</tbody>
+</table>
+
           
         
       
@@ -819,7 +1386,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/02/2019-3-2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/08/工具箱/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alex Tu">
@@ -839,7 +1406,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/03/02/2019-3-2/" class="post-title-link" itemprop="http://yoursite.com/index.html">今天去车管所上电动自行车牌照，感受了一把北京的政务水平，感觉还不错，流程挺快，上牌竟然都没收费。另外北方人的直爽倒是真的，就是那股爱谁谁的劲儿。</a>
+                <a href="/2018/12/08/工具箱/" class="post-title-link" itemprop="http://yoursite.com/index.html">工具箱</a>
               
             
           </h1>
@@ -864,16 +1431,46 @@
                 
               
 
-              <time title="创建时间：2019-03-02 22:43:39 / 修改时间：22:47:37" itemprop="dateCreated datePublished" datetime="2019-03-02T22:43:39+08:00">2019-03-02</time>
+              <time title="创建时间：2018-12-08 16:02:48" itemprop="dateCreated datePublished" datetime="2018-12-08T16:02:48+08:00">2018-12-08</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-18 23:35:55" itemprop="dateModified" datetime="2019-06-18T23:35:55+08:00">2019-06-18</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -883,8 +1480,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/03/02/2019-3-2/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/03/02/2019-3-2/" itemprop="commentCount"></span>
+                <a href="/2018/12/08/工具箱/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/08/工具箱/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -914,913 +1511,53 @@
       
         
           
-            
-          
-        
-      
-    </div>
+            <p>记录下平常使用的工具，不定期更新。</p>
+<h2 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h2><p>主力用VS Code，偶尔用sublime，用了如下插件</p>
+<ul>
+<li>Debugger for Chrome，调试用</li>
+<li>Beautify，美化代码格式</li>
+<li>Docker，辅助管理docker文件</li>
+<li>EditorConfig for VS Code，编辑器配置管理,设置保存自动美化格式。</li>
+<li>ESLint，代码规范</li>
+<li>Git History，辅助git管理，vscode自带的git管理太简陋了</li>
+<li>Markdown All in One，辅助去写markdown</li>
+<li>Markdown Preview Enhanced，预览markdown文件</li>
+<li>Atom One Dark Theme，主题</li>
+</ul>
+<h2 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h2><p>chrome，用了如下插件</p>
+<ul>
+<li>JSONViwer，格式化json数据</li>
+<li>Proxy SwitchyOmega，代理配置</li>
+<li>React Developer Tools，react调试工具</li>
+<li>React Perf，react性能检测</li>
+<li>react-detector，检测网站是否使用react</li>
+<li>Redux DevTools，redux调试</li>
+<li>Restlet Client - REST API Testing，类似postman</li>
+<li>uBlock Origin，广告屏蔽，神器！</li>
+<li>WEB前端助手(FeHelper)，如名</li>
+</ul>
+<h2 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h2><p>使用的iterm，配合zsh + oh-my-zsh。主题是avit。</p>
+<h2 id="桌面应用"><a href="#桌面应用" class="headerlink" title="桌面应用"></a>桌面应用</h2><ul>
+<li>shadowsocks，翻墙用</li>
+<li>postman，测试http请求</li>
+<li>Charles，抓包</li>
+<li>sequel pro，数据库可视化</li>
+<li>docker，docker管理</li>
+<li>sourcetree，git管理，现在逐步转到直接使用vscode配合插件去操作git</li>
+<li>xmind zen，思维导图</li>
+<li>color node，取色</li>
+<li>有道云笔记，文档管理、备忘录、日记</li>
+<li>outlook，邮箱</li>
+<li>alfred3，应用的快速启动</li>
+<li>cleanmymac3，不定期清理电脑</li>
+<li>迅雷，下载用</li>
+<li>微软三件套，word、excel、ppt</li>
+<li>keynote，制作幻灯片用这个</li>
+<li>photoshop，看设计图</li>
+<li>sketch，看设计图</li>
+<li>Cisco AnyConnect Secure Mobility Client，连公司内网</li>
+</ul>
 
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/13/2019-2-13/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alex Tu">
-      <meta itemprop="description" content="欢迎光临| ᐕ)୨">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="2019✈飞行手册✈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/13/2019-2-13/" class="post-title-link" itemprop="http://yoursite.com/index.html">前辈说，前端到顶月薪50k。</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-02-13 21:14:12 / 修改时间：21:14:58" itemprop="dateCreated datePublished" datetime="2019-02-13T21:14:12+08:00">2019-02-13</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/02/13/2019-2-13/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/02/13/2019-2-13/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/12/2019-2-12/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alex Tu">
-      <meta itemprop="description" content="欢迎光临| ᐕ)୨">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="2019✈飞行手册✈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/12/2019-2-12/" class="post-title-link" itemprop="http://yoursite.com/index.html">奔驰、宝马的翻译真厉害，还有可口可乐。</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-02-12 23:16:09 / 修改时间：23:16:31" itemprop="dateCreated datePublished" datetime="2019-02-12T23:16:09+08:00">2019-02-12</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/02/12/2019-2-12/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/02/12/2019-2-12/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/09/2019-2-9/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alex Tu">
-      <meta itemprop="description" content="欢迎光临| ᐕ)୨">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="2019✈飞行手册✈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/09/2019-2-9/" class="post-title-link" itemprop="http://yoursite.com/index.html">把评判标准掌握在自己的手上。</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-02-09 21:12:19 / 修改时间：21:12:49" itemprop="dateCreated datePublished" datetime="2019-02-09T21:12:19+08:00">2019-02-09</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/02/09/2019-2-9/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/02/09/2019-2-9/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/08/2019-2-8/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alex Tu">
-      <meta itemprop="description" content="欢迎光临| ᐕ)୨">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="2019✈飞行手册✈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/08/2019-2-8/" class="post-title-link" itemprop="http://yoursite.com/index.html">手机/电脑背后是一个工业体系，汽车是一个工业体系，电影是一个工业体系，表面看起来的一个简单商品背后是复杂的产业链，带动了多少就业啊。</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-02-08 19:26:49 / 修改时间：19:29:03" itemprop="dateCreated datePublished" datetime="2019-02-08T19:26:49+08:00">2019-02-08</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/02/08/2019-2-8/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/02/08/2019-2-8/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/07/2019-2-7/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alex Tu">
-      <meta itemprop="description" content="欢迎光临| ᐕ)୨">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="2019✈飞行手册✈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/07/2019-2-7/" class="post-title-link" itemprop="http://yoursite.com/index.html">菲斯塔就是前脸丑了点啊。</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-02-07 22:16:02 / 修改时间：22:16:20" itemprop="dateCreated datePublished" datetime="2019-02-07T22:16:02+08:00">2019-02-07</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/02/07/2019-2-7/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/02/07/2019-2-7/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/25/2019-1-25/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alex Tu">
-      <meta itemprop="description" content="欢迎光临| ᐕ)୨">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="2019✈飞行手册✈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/25/2019-1-25/" class="post-title-link" itemprop="http://yoursite.com/index.html">老工程师的一些经验真的强啊。</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-01-25 15:50:56 / 修改时间：15:51:13" itemprop="dateCreated datePublished" datetime="2019-01-25T15:50:56+08:00">2019-01-25</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/01/25/2019-1-25/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/01/25/2019-1-25/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
           
         
       
@@ -1864,10 +1601,6 @@
   </section>
 
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
-
 
 
           </div>
@@ -1910,7 +1643,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">99</span>
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1927,7 +1660,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">1</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>

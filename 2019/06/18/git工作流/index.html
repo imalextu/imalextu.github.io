@@ -104,24 +104,30 @@
 
 
 
-  <meta name="description" content="记录下平常使用的工具，不定期更新。 编辑器主力用VS Code，偶尔用sublime，用了如下插件  Debugger for Chrome，调试用 Beautify，美化代码格式 Docker，辅助管理docker文件 EditorConfig for VS Code，编辑器配置管理,设置保存自动美化格式。 ESLint，代码规范 Git History，辅助git管理，vscode自带的git">
+  <meta name="description" content="git工作流先介绍一下业务背景，我们的项目由四五个同学同步进行开发，难免会出现代码冲突，由此设计了这一套分支管理方案。该方案基于git分支管理最佳实践。 如有分支管理优化意见，欢迎共同探讨。 分支类型 master 主分支，提供发布的稳定版。 仅限合并 develop、hotfix-* 分支   develop 开发分支，提供最新的开发版。 仅限合并 feature-*、hotfix-* 分支">
 <meta property="og:type" content="article">
-<meta property="og:title" content="工具箱">
-<meta property="og:url" content="http://yoursite.com/2018/12/08/工具箱/index.html">
+<meta property="og:title" content="git工作流">
+<meta property="og:url" content="http://yoursite.com/2019/06/18/git工作流/index.html">
 <meta property="og:site_name" content="2019✈飞行手册✈">
-<meta property="og:description" content="记录下平常使用的工具，不定期更新。 编辑器主力用VS Code，偶尔用sublime，用了如下插件  Debugger for Chrome，调试用 Beautify，美化代码格式 Docker，辅助管理docker文件 EditorConfig for VS Code，编辑器配置管理,设置保存自动美化格式。 ESLint，代码规范 Git History，辅助git管理，vscode自带的git">
+<meta property="og:description" content="git工作流先介绍一下业务背景，我们的项目由四五个同学同步进行开发，难免会出现代码冲突，由此设计了这一套分支管理方案。该方案基于git分支管理最佳实践。 如有分支管理优化意见，欢迎共同探讨。 分支类型 master 主分支，提供发布的稳定版。 仅限合并 develop、hotfix-* 分支   develop 开发分支，提供最新的开发版。 仅限合并 feature-*、hotfix-* 分支">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-18T15:35:55.393Z">
+<meta property="og:image" content="http://yoursite.com/2019/06/18/git工作流/img/feature-branch.png?raw=true">
+<meta property="og:image" content="http://yoursite.com/2019/06/18/git工作流/img/staging-branch.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/18/git工作流/img/staging-branch1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/18/git工作流/img/develop-branch1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/18/git工作流/img/master-branch.png">
+<meta property="og:updated_time" content="2019-06-18T14:29:24.571Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="工具箱">
-<meta name="twitter:description" content="记录下平常使用的工具，不定期更新。 编辑器主力用VS Code，偶尔用sublime，用了如下插件  Debugger for Chrome，调试用 Beautify，美化代码格式 Docker，辅助管理docker文件 EditorConfig for VS Code，编辑器配置管理,设置保存自动美化格式。 ESLint，代码规范 Git History，辅助git管理，vscode自带的git">
+<meta name="twitter:title" content="git工作流">
+<meta name="twitter:description" content="git工作流先介绍一下业务背景，我们的项目由四五个同学同步进行开发，难免会出现代码冲突，由此设计了这一套分支管理方案。该方案基于git分支管理最佳实践。 如有分支管理优化意见，欢迎共同探讨。 分支类型 master 主分支，提供发布的稳定版。 仅限合并 develop、hotfix-* 分支   develop 开发分支，提供最新的开发版。 仅限合并 feature-*、hotfix-* 分支">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/18/git工作流/img/feature-branch.png?raw=true">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/08/工具箱/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/18/git工作流/">
 
 
 
@@ -131,7 +137,7 @@
   };
 </script>
 
-  <title>工具箱 | 2019✈飞行手册✈</title>
+  <title>git工作流 | 2019✈飞行手册✈</title>
   
 
 
@@ -342,7 +348,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/08/工具箱/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/18/git工作流/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alex Tu">
@@ -359,7 +365,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">工具箱
+          <h1 class="post-title" itemprop="name headline">git工作流
 
               
             
@@ -385,46 +391,16 @@
                 
               
 
-              <time title="创建时间：2018-12-08 16:02:48" itemprop="dateCreated datePublished" datetime="2018-12-08T16:02:48+08:00">2018-12-08</time>
+              <time title="创建时间：2019-06-18 22:18:43 / 修改时间：22:29:24" itemprop="dateCreated datePublished" datetime="2019-06-18T22:18:43+08:00">2019-06-18</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-18 23:35:55" itemprop="dateModified" datetime="2019-06-18T23:35:55+08:00">2019-06-18</time>
               
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -434,8 +410,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/12/08/工具箱/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/08/工具箱/" itemprop="commentCount"></span>
+                <a href="/2019/06/18/git工作流/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/06/18/git工作流/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -463,52 +439,51 @@
       
 
       
-        <p>记录下平常使用的工具，不定期更新。</p>
-<h2 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h2><p>主力用VS Code，偶尔用sublime，用了如下插件</p>
-<ul>
-<li>Debugger for Chrome，调试用</li>
-<li>Beautify，美化代码格式</li>
-<li>Docker，辅助管理docker文件</li>
-<li>EditorConfig for VS Code，编辑器配置管理,设置保存自动美化格式。</li>
-<li>ESLint，代码规范</li>
-<li>Git History，辅助git管理，vscode自带的git管理太简陋了</li>
-<li>Markdown All in One，辅助去写markdown</li>
-<li>Markdown Preview Enhanced，预览markdown文件</li>
-<li>Atom One Dark Theme，主题</li>
+        <h1 id="git工作流"><a href="#git工作流" class="headerlink" title="git工作流"></a>git工作流</h1><p>先介绍一下业务背景，我们的项目由四五个同学同步进行开发，难免会出现代码冲突，由此设计了这一套分支管理方案。该方案基于<a href="http://nvie.com/posts/a-successful-git-branching-model/" target="_blank" rel="noopener">git分支管理最佳实践</a>。</p>
+<p>如有分支管理优化意见，欢迎<strong>共同探讨</strong>。</p>
+<h3 id="分支类型"><a href="#分支类型" class="headerlink" title="分支类型"></a>分支类型</h3><ul>
+<li>master<ul>
+<li>主分支，提供发布的稳定版。</li>
+<li>仅限合并 develop、hotfix-* 分支</li>
 </ul>
-<h2 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h2><p>chrome，用了如下插件</p>
-<ul>
-<li>JSONViwer，格式化json数据</li>
-<li>Proxy SwitchyOmega，代理配置</li>
-<li>React Developer Tools，react调试工具</li>
-<li>React Perf，react性能检测</li>
-<li>react-detector，检测网站是否使用react</li>
-<li>Redux DevTools，redux调试</li>
-<li>Restlet Client - REST API Testing，类似postman</li>
-<li>uBlock Origin，广告屏蔽，神器！</li>
-<li>WEB前端助手(FeHelper)，如名</li>
+</li>
+<li>develop<ul>
+<li>开发分支，提供最新的开发版。</li>
+<li>仅限合并 feature-*、hotfix-* 分支</li>
 </ul>
-<h2 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h2><p>使用的iterm，配合zsh + oh-my-zsh。主题是avit。</p>
-<h2 id="桌面应用"><a href="#桌面应用" class="headerlink" title="桌面应用"></a>桌面应用</h2><ul>
-<li>shadowsocks，翻墙用</li>
-<li>postman，测试http请求</li>
-<li>Charles，抓包</li>
-<li>sequel pro，数据库可视化</li>
-<li>docker，docker管理</li>
-<li>sourcetree，git管理，现在逐步转到直接使用vscode配合插件去操作git</li>
-<li>xmind zen，思维导图</li>
-<li>color node，取色</li>
-<li>有道云笔记，文档管理、备忘录、日记</li>
-<li>outlook，邮箱</li>
-<li>alfred3，应用的快速启动</li>
-<li>cleanmymac3，不定期清理电脑</li>
-<li>迅雷，下载用</li>
-<li>微软三件套，word、excel、ppt</li>
-<li>keynote，制作幻灯片用这个</li>
-<li>photoshop，看设计图</li>
-<li>sketch，看设计图</li>
-<li>Cisco AnyConnect Secure Mobility Client，连公司内网</li>
+</li>
+<li>staging<ul>
+<li>测试分支，提供最新的测试版。</li>
+<li>仅限合并 feature-*、hotfix-* 分支</li>
 </ul>
+</li>
+<li>feature-*<ul>
+<li>特性分支或功能分支，用于开发具体需求。</li>
+<li>例如：feature-fds-bucket-list 文件存储的 bucket 列表开发。</li>
+</ul>
+</li>
+<li>hotfix-*<ul>
+<li>热性分支，用于修复线上严重bug</li>
+<li>仅限合并 master、develop、staging 分支</li>
+</ul>
+</li>
+</ul>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><h4 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基于 develop 创建新特性分支</span></span><br><span class="line">git checkout -b feature-* develop</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"commit description"</span></span><br><span class="line"><span class="comment"># many commit...</span></span><br></pre></td></tr></table></figure>
+<p>图示：</p>
+<p><img src="img/feature-branch.png?raw=true" alt=""></p>
+<h4 id="测试环境提测"><a href="#测试环境提测" class="headerlink" title="测试环境提测"></a>测试环境提测</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 合并特性分支到 staging</span></span><br><span class="line">git checkout staging</span><br><span class="line">git pull origin staging  <span class="comment"># 更新远程分支到本地</span></span><br><span class="line">git merge feature-* --no-ff  <span class="comment"># 如果有冲突，不确定保留哪部分，和相关同学确认</span></span><br><span class="line">git push origin staging  <span class="comment"># 每次提测，必须更新 origin/staging</span></span><br></pre></td></tr></table></figure>
+<p>单次提测图示：</p>
+<p><img src="img/staging-branch.png" alt=""></p>
+<p><strong>警告：</strong> 相关 bug 回到原 feature-* 分支进行修复，再次提测，<strong>切勿在staging分支上进行bug修复</strong>。多次提测图示：</p>
+<p><img src="img/staging-branch1.png" alt="staging1"></p>
+<h4 id="上线"><a href="#上线" class="headerlink" title="上线"></a>上线</h4><p><strong>必须满足</strong> 代码提测完成，达到稳定版本。<strong>否则</strong>不能将 feature-* 分支代码 merge 到 develop 分支上。</p>
+<p>如需 code review，请提交一个 merge request，参考 <a href="http://v9.git.n.xiaomi.com/Eco_FE/Docs/blob/master/docs/code-review/code-review.md" target="_blank" rel="noopener">merge request 创建流程</a>。</p>
+<p>图示：</p>
+<p><img src="img/develop-branch1.png" alt="develop-branch1"></p>
+<h4 id="上线并确认无误"><a href="#上线并确认无误" class="headerlink" title="上线并确认无误"></a>上线并确认无误</h4><p>同步代码到主干分支，并且打上 tag。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git pull origin master</span><br><span class="line">git merge develop --no-ff</span><br><span class="line">git tag -a v2.0.0 -m <span class="string">"tag description"</span>  <span class="comment"># 创建tag</span></span><br><span class="line">git push origin master  <span class="comment"># 更新 master</span></span><br><span class="line">git push origin v2.0.0  <span class="comment"># 同步 tag</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上线后删除特性分支</span></span><br><span class="line">git branch -D feature-*</span><br></pre></td></tr></table></figure>
+<p>图示：</p>
+<p><img src="img/master-branch.png" alt="master-branch1"></p>
 
       
     </div>
@@ -568,14 +543,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/05/19/前端算法题/" rel="next" title="前端算法题">
+                <i class="fa fa-chevron-left"></i> 前端算法题
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/12/08/技术栈/" rel="prev" title="技术栈&学习路线&常用库">
-                技术栈&学习路线&常用库 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/18/接口规范/" rel="prev" title="接口规范">
+                接口规范 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -732,7 +711,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编辑器"><span class="nav-number">1.</span> <span class="nav-text">编辑器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器"><span class="nav-number">2.</span> <span class="nav-text">浏览器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终端"><span class="nav-number">3.</span> <span class="nav-text">终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桌面应用"><span class="nav-number">4.</span> <span class="nav-text">桌面应用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#git工作流"><span class="nav-number">1.</span> <span class="nav-text">git工作流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分支类型"><span class="nav-number">1.0.1.</span> <span class="nav-text">分支类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期"><span class="nav-number">1.0.2.</span> <span class="nav-text">生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开发"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">开发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试环境提测"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">测试环境提测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#上线"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">上线</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#上线并确认无误"><span class="nav-number">1.0.2.4.</span> <span class="nav-text">上线并确认无误</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

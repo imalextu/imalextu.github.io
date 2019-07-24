@@ -636,12 +636,24 @@
                 
               
 
-              <time title="创建时间：2019-06-18 22:18:43 / 修改时间：22:29:24" itemprop="dateCreated datePublished" datetime="2019-06-18T22:18:43+08:00">2019-06-18</time>
+              <time title="创建时间：2019-06-18 22:18:43" itemprop="dateCreated datePublished" datetime="2019-06-18T22:18:43+08:00">2019-06-18</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-24 11:59:09" itemprop="dateModified" datetime="2019-07-24T11:59:09+08:00">2019-07-24</time>
               
             
           </span>
@@ -717,20 +729,20 @@
 </ul>
 <h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><h4 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基于 develop 创建新特性分支</span></span><br><span class="line">git checkout -b feature-* develop</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"commit description"</span></span><br><span class="line"><span class="comment"># many commit...</span></span><br></pre></td></tr></table></figure>
 <p>图示：</p>
-<p><img src="img/feature-branch.png?raw=true" alt=""></p>
+<p><img src="/2019/06/18/git工作流/feature-branch.png?raw=true" alt=""></p>
 <h4 id="测试环境提测"><a href="#测试环境提测" class="headerlink" title="测试环境提测"></a>测试环境提测</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 合并特性分支到 staging</span></span><br><span class="line">git checkout staging</span><br><span class="line">git pull origin staging  <span class="comment"># 更新远程分支到本地</span></span><br><span class="line">git merge feature-* --no-ff  <span class="comment"># 如果有冲突，不确定保留哪部分，和相关同学确认</span></span><br><span class="line">git push origin staging  <span class="comment"># 每次提测，必须更新 origin/staging</span></span><br></pre></td></tr></table></figure>
 <p>单次提测图示：</p>
-<p><img src="img/staging-branch.png" alt=""></p>
+<p><img src="/2019/06/18/git工作流/staging-branch.png" alt=""></p>
 <p><strong>警告：</strong> 相关 bug 回到原 feature-* 分支进行修复，再次提测，<strong>切勿在staging分支上进行bug修复</strong>。多次提测图示：</p>
-<p><img src="img/staging-branch1.png" alt="staging1"></p>
+<p><img src="/2019/06/18/git工作流/staging-branch1.png" alt="staging1"></p>
 <h4 id="上线"><a href="#上线" class="headerlink" title="上线"></a>上线</h4><p><strong>必须满足</strong> 代码提测完成，达到稳定版本。<strong>否则</strong>不能将 feature-* 分支代码 merge 到 develop 分支上。</p>
 <p>如需 code review，请提交一个 merge request，参考 <a href="http://v9.git.n.xiaomi.com/Eco_FE/Docs/blob/master/docs/code-review/code-review.md" target="_blank" rel="noopener">merge request 创建流程</a>。</p>
 <p>图示：</p>
-<p><img src="img/develop-branch1.png" alt="develop-branch1"></p>
+<p><img src="/2019/06/18/git工作流/develop-branch1.png" alt="develop-branch1"></p>
 <h4 id="上线并确认无误"><a href="#上线并确认无误" class="headerlink" title="上线并确认无误"></a>上线并确认无误</h4><p>同步代码到主干分支，并且打上 tag。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git pull origin master</span><br><span class="line">git merge develop --no-ff</span><br><span class="line">git tag -a v2.0.0 -m <span class="string">"tag description"</span>  <span class="comment"># 创建tag</span></span><br><span class="line">git push origin master  <span class="comment"># 更新 master</span></span><br><span class="line">git push origin v2.0.0  <span class="comment"># 同步 tag</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上线后删除特性分支</span></span><br><span class="line">git branch -D feature-*</span><br></pre></td></tr></table></figure>
 <p>图示：</p>
-<p><img src="img/master-branch.png" alt="master-branch1"></p>
+<p><img src="/2019/06/18/git工作流/master-branch.png" alt="master-branch1"></p>
 
           
         

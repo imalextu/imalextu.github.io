@@ -38,7 +38,7 @@ git commit -m "commit description"
 
 图示：
 
-![](img/feature-branch.png?raw=true)
+![](git工作流/feature-branch.png?raw=true)
 
 #### 测试环境提测
 ``` bash
@@ -51,11 +51,11 @@ git push origin staging  # 每次提测，必须更新 origin/staging
 
 单次提测图示：
 
-![](img/staging-branch.png)
+![](git工作流/staging-branch.png)
 
 **警告：** 相关 bug 回到原 feature-\* 分支进行修复，再次提测，**切勿在staging分支上进行bug修复**。多次提测图示：
 
-![staging1](img/staging-branch1.png)
+![staging1](git工作流/staging-branch1.png)
 
 #### 上线
 **必须满足** 代码提测完成，达到稳定版本。**否则**不能将 feature-* 分支代码 merge 到 develop 分支上。
@@ -64,7 +64,7 @@ git push origin staging  # 每次提测，必须更新 origin/staging
 
 图示：
 
-![develop-branch1](img/develop-branch1.png)
+![develop-branch1](git工作流/develop-branch1.png)
 
 #### 上线并确认无误
 同步代码到主干分支，并且打上 tag。
@@ -82,4 +82,4 @@ git branch -D feature-*
 ```
 图示：
 
-![master-branch1](img/master-branch.png)
+![master-branch1](git工作流/master-branch.png)

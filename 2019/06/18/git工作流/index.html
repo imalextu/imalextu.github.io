@@ -104,22 +104,23 @@
 
 
 
-  <meta name="description" content="git工作流先介绍一下业务背景，我们的项目由四五个同学同步进行开发，难免会出现代码冲突，由此设计了这一套分支管理方案。该方案基于git分支管理最佳实践。 如有分支管理优化意见，欢迎共同探讨。 分支类型 master 主分支，提供发布的稳定版。 仅限合并 develop、hotfix-* 分支   develop 开发分支，提供最新的开发版。 仅限合并 feature-*、hotfix-* 分支">
+  <meta name="description" content="git工作流先介绍一下业务背景，我们的项目由四五个同学同步进行开发，难免会出现代码冲突，由此设计了这一套分支管理方案。该方案基于git分支管理最佳实践。 如有分支管理优化意见，欢迎共同探讨。">
+<meta name="keywords" content="git,前端工程化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git工作流">
 <meta property="og:url" content="http://yoursite.com/2019/06/18/git工作流/index.html">
 <meta property="og:site_name" content="2019✈飞行手册✈">
-<meta property="og:description" content="git工作流先介绍一下业务背景，我们的项目由四五个同学同步进行开发，难免会出现代码冲突，由此设计了这一套分支管理方案。该方案基于git分支管理最佳实践。 如有分支管理优化意见，欢迎共同探讨。 分支类型 master 主分支，提供发布的稳定版。 仅限合并 develop、hotfix-* 分支   develop 开发分支，提供最新的开发版。 仅限合并 feature-*、hotfix-* 分支">
+<meta property="og:description" content="git工作流先介绍一下业务背景，我们的项目由四五个同学同步进行开发，难免会出现代码冲突，由此设计了这一套分支管理方案。该方案基于git分支管理最佳实践。 如有分支管理优化意见，欢迎共同探讨。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/06/18/git工作流/feature-branch.png?raw=true">
 <meta property="og:image" content="http://yoursite.com/2019/06/18/git工作流/staging-branch.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/18/git工作流/staging-branch1.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/18/git工作流/develop-branch1.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/18/git工作流/master-branch.png">
-<meta property="og:updated_time" content="2019-07-24T03:59:09.333Z">
+<meta property="og:updated_time" content="2019-07-27T03:20:02.448Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git工作流">
-<meta name="twitter:description" content="git工作流先介绍一下业务背景，我们的项目由四五个同学同步进行开发，难免会出现代码冲突，由此设计了这一套分支管理方案。该方案基于git分支管理最佳实践。 如有分支管理优化意见，欢迎共同探讨。 分支类型 master 主分支，提供发布的稳定版。 仅限合并 develop、hotfix-* 分支   develop 开发分支，提供最新的开发版。 仅限合并 feature-*、hotfix-* 分支">
+<meta name="twitter:description" content="git工作流先介绍一下业务背景，我们的项目由四五个同学同步进行开发，难免会出现代码冲突，由此设计了这一套分支管理方案。该方案基于git分支管理最佳实践。 如有分支管理优化意见，欢迎共同探讨。">
 <meta name="twitter:image" content="http://yoursite.com/2019/06/18/git工作流/feature-branch.png?raw=true">
 
 
@@ -270,7 +271,7 @@
 
     
 
-    <a href="/categories/microblog" rel="section"><i class="menu-item-icon fa fa-fw fa-heart"></i> <br>微博</a>
+    <a href="/categories/microblog" rel="section"><i class="menu-item-icon fa fa-fw fa-heart"></i> <br>说说</a>
 
   </li>
         
@@ -408,11 +409,29 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-24 11:59:09" itemprop="dateModified" datetime="2019-07-24T11:59:09+08:00">2019-07-24</time>
+                <time title="修改时间：2019-07-27 11:20:02" itemprop="dateModified" datetime="2019-07-27T11:20:02+08:00">2019-07-27</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -452,7 +471,7 @@
 
       
         <h1 id="git工作流"><a href="#git工作流" class="headerlink" title="git工作流"></a>git工作流</h1><p>先介绍一下业务背景，我们的项目由四五个同学同步进行开发，难免会出现代码冲突，由此设计了这一套分支管理方案。该方案基于<a href="http://nvie.com/posts/a-successful-git-branching-model/" target="_blank" rel="noopener">git分支管理最佳实践</a>。</p>
-<p>如有分支管理优化意见，欢迎<strong>共同探讨</strong>。</p>
+<p>如有分支管理优化意见，欢迎<strong>共同探讨</strong>。<br><a id="more"></a></p>
 <h3 id="分支类型"><a href="#分支类型" class="headerlink" title="分支类型"></a>分支类型</h3><ul>
 <li>master<ul>
 <li>主分支，提供发布的稳定版。</li>
@@ -546,6 +565,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+            <a href="/tags/前端工程化/" rel="tag"># 前端工程化</a>
+          
+        </div>
+      
 
       
       
@@ -555,8 +582,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/19/前端算法题/" rel="next" title="前端算法题">
-                <i class="fa fa-chevron-left"></i> 前端算法题
+              <a href="/2019/06/15/2019-6-15-1/" rel="next" title="一点编程学习的体会：1.光看教程远没有自己亲手code学习来的快。2.适当的学习总结做笔记是很有必要的，过一段时间之前学习的东西就容易忘，更何况前端学习的知识点这么琐碎。3.很多文章质量低下，除非实在没有好的参考资料，不要耗费精力去研究这些文章。争取直接看英文的一手资料。">
+                <i class="fa fa-chevron-left"></i> 一点编程学习的体会：1.光看教程远没有自己亲手code学习来的快。2.适当的学习总结做笔记是很有必要的，过一段时间之前学习的东西就容易忘，更何况前端学习的知识点这么琐碎。3.很多文章质量低下，除非实在没有好的参考资料，不要耗费精力去研究这些文章。争取直接看英文的一手资料。
               </a>
             
           </div>
@@ -643,7 +670,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -660,12 +687,31 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
               
 
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
               
             </nav>
           

@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.jpg?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.jpg?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","width":280,"display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="随着react的发展，各种组件设计模式层出不穷。react官方文档也有不少相关文章，但是组织稍显凌乱，本文就组件的设计模式这一角度，从问题出发，为大家梳理了常见的设计模式。看完这篇文章后，你将能得心应手地处理绝大多数的react组件使用问题。 开始之前先解释一下什么是设计模式。所谓模式，是指在某些场景下，针对某类问题的某种通用的解决方案。本文所阐述的设计模式并不是编程通用的设计模式，如大家熟悉的单">
+<meta name="keywords" content="js,react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你要知道的react组件设计模式,都在这了(上)">
+<meta property="og:url" content="http://yoursite.com/2019/07/27/react设计模式(上)/index.html">
+<meta property="og:site_name" content="2019✈飞行手册✈">
+<meta property="og:description" content="随着react的发展，各种组件设计模式层出不穷。react官方文档也有不少相关文章，但是组织稍显凌乱，本文就组件的设计模式这一角度，从问题出发，为大家梳理了常见的设计模式。看完这篇文章后，你将能得心应手地处理绝大多数的react组件使用问题。 开始之前先解释一下什么是设计模式。所谓模式，是指在某些场景下，针对某类问题的某种通用的解决方案。本文所阐述的设计模式并不是编程通用的设计模式，如大家熟悉的单">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-27T04:22:55.067Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="你要知道的react组件设计模式,都在这了(上)">
+<meta name="twitter:description" content="随着react的发展，各种组件设计模式层出不穷。react官方文档也有不少相关文章，但是组织稍显凌乱，本文就组件的设计模式这一角度，从问题出发，为大家梳理了常见的设计模式。看完这篇文章后，你将能得心应手地处理绝大多数的react组件使用问题。 开始之前先解释一下什么是设计模式。所谓模式，是指在某些场景下，针对某类问题的某种通用的解决方案。本文所阐述的设计模式并不是编程通用的设计模式，如大家熟悉的单">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/27/react设计模式(上)/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>你要知道的react组件设计模式,都在这了(上) | 2019✈飞行手册✈</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">2019✈飞行手册✈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">月黑见渔灯，孤光一点萤。微微风簇浪，散作满河星。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tech">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/tech" rel="section"><i class="menu-item-icon fa fa-fw fa-pencil-square-o"></i> <br>技术</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-microblog">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/microblog" rel="section"><i class="menu-item-icon fa fa-fw fa-heart"></i> <br>说说</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+    <a href="https://github.com/imalextu" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/27/react设计模式(上)/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alex Tu">
+      <meta itemprop="description" content="欢迎光临| ᐕ)୨">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="2019✈飞行手册✈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">你要知道的react组件设计模式,都在这了(上)
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-27 11:38:15 / 修改时间：12:22:55" itemprop="dateCreated datePublished" datetime="2019-07-27T11:38:15+08:00">2019-07-27</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/27/react设计模式(上)/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/07/27/react设计模式(上)/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>随着react的发展，各种组件设计模式层出不穷。react官方文档也有不少相关文章，但是组织稍显凌乱，本文就组件的设计模式这一角度，从问题出发，为大家梳理了常见的设计模式。看完这篇文章后，你将能得心应手地处理绝大多数的react组件使用问题。</p>
+<p>开始之前先解释一下什么是设计模式。所谓模式，是指在某些场景下，针对某类问题的某种通用的解决方案。本文所阐述的设计模式并不是编程通用的设计模式，如大家熟悉的单例模式、工厂模式等等。而是在设计react组件和相关代码时的一些解决方案与技巧，包括：1.容器与展示组件 2.高阶组件 3.render props 4.context模式 5.组合组件  6.关于组合与继承</p>
+<p>为了更好的理解，你可以将相应源码下载下来查看：<a href="https://github.com/imalextu/learn-react-patterns" target="_blank" rel="noopener">源码地址</a></p>
+<p>由于内容较多，分两篇进行。上篇先介绍：1.容器与展示组件 2.高阶组件 3.render props。<br><a id="more"></a></p>
+<h2 id="容器-Container-与-展示-Presentational-组件"><a href="#容器-Container-与-展示-Presentational-组件" class="headerlink" title="容器(Container) 与 展示(Presentational) 组件"></a>容器(Container) 与 展示(Presentational) 组件</h2><h3 id="概念介绍"><a href="#概念介绍" class="headerlink" title="概念介绍"></a>概念介绍</h3><p>我们先介绍一个较为简单的使用模式，那就是容器组件与展示组件。这种模式还有很多种称呼，如胖组件和瘦组件、有状态组件和无状态组件、聪明组件和傻瓜组件等等。</p>
+<p>名称很多，但想要阐述的本质都一样，就是当组件与外部数据进行交互时，我们可以把组件拆为两部分:</p>
+<p>容器组件：主要负责同外部数据进行交互（通信），譬如通过fetch获取数据、从Redux获取等等。</p>
+<p>展示组件：只根据自身state及接收自父组件的props做渲染，并不直接与外部数据源进行沟通。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>我们来看一个简单的例子。构造一个组件，该组件的作用是获取文本并将其展示出来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">export default class GetText extends React.Component &#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    text: null,</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    fetch(&apos;https://icanhazdadjoke.com/&apos;,</span><br><span class="line">      &#123; headers: &#123; Accept: &apos;application/json&apos; &#125; &#125;).then(response =&gt; &#123;</span><br><span class="line">        return response.json()</span><br><span class="line">      &#125;).then(json =&gt; &#123;</span><br><span class="line">        this.setState(&#123; text: json.joke &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;div&gt;外部获取的数据：&#123;this.state.text&#125;&lt;/div&gt;</span><br><span class="line">        &lt;div&gt;UI代码&lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到上面GetText这个组件，当有和外部数据源进行沟通的逻辑。那么我们就可以把这个组件拆成两部分。</p>
+<p>一部分专门负责和外部通信（容器组件），一部分负责UI逻辑（展示组件）。我们来将上面那个例子拆分看看。</p>
+<p>容器组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">export default class GetTextContainer extends React.Component &#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    text: null,</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    fetch(&apos;https://icanhazdadjoke.com/&apos;,</span><br><span class="line">      &#123; headers: &#123; Accept: &apos;application/json&apos; &#125; &#125;).then(response =&gt; &#123;</span><br><span class="line">        return response.json()</span><br><span class="line">      &#125;).then(json =&gt; &#123;</span><br><span class="line">        this.setState(&#123; text: json.joke &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;GetTextPresentational text=&#123;this.state.text&#125;/&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>展示组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">export default class GetTextPresentational extends React.Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;div&gt;外部获取的数据：&#123;this.props.text&#125;&lt;/div&gt;</span><br><span class="line">        &lt;div&gt;UI代码&lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体代码可见<a href="https://github.com/imalextu/learn-react-patterns/tree/master/src/pattern1" target="_blank" rel="noopener">src/pattern1</a></p>
+<h3 id="模式所解决的问题"><a href="#模式所解决的问题" class="headerlink" title="模式所解决的问题"></a>模式所解决的问题</h3><p>软件设计中有一个原则，叫做“责任分离”（Separation of Responsibility），即让一个模块的责任尽量少，如果发现一个模块功能过多，就应该拆分为多个模块，让一个模块都专注于一个功能，这样更利于代码的维护。</p>
+<p>容器展示组件这个模式所解决的问题在于，当我们切换数据获取方式时，只需在容器组件修改相应逻辑即可，展示组件无需做改动。比如现在我们获取数据源是通过普通的fetch请求，那么将来改成redux或者mobx作为数据源，我们只需到容器组件去修改相应逻辑即可，展示组件可完全不变，展示组件有了更高的可复用性。</p>
+<p>但该模式的缺点也在于将一个组件分成了两部分，增加了代码跳转的成本。并不是说组件包含从外部获取数据，就要将其拆成容器组件与展示组件。拆分带来的好处和劣势需要你自己去权衡。</p>
+<p>想对这种模式深入了解，可以详见这篇文章：<a href="https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0" target="_blank" rel="noopener">Presentational and Container Components</a>。</p>
+<h2 id="高阶组件"><a href="#高阶组件" class="headerlink" title="高阶组件"></a>高阶组件</h2><h3 id="概念介绍-1"><a href="#概念介绍-1" class="headerlink" title="概念介绍"></a>概念介绍</h3><p>当你想复用一个组件的逻辑时，高阶组件(HOC)和渲染回调(render props)就派上用场了。我们先来介绍高阶组件，高阶组件本质是利用一个函数，该函数接收 React 组件作为参数，并返回新的组件。</p>
+<p>我们肯定碰到过很多需要复用业务逻辑的情况，比如我们有一个女性电商网站，所有的组件都要先判定用户为女性才开放展示。比如在List组件，是男性则提示不对男性开放，是女性则展示具体服装列表。而在ShoppingCart组件，同样的一段逻辑，是男性则提示不对男性开放，是女性则展示相应购物车。</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>前面我们已经说过了，高阶组件其实是利用一个函数，接受react组件作为参数，然后返回新的组件。</p>
+<p>我们这边新建一个judgeWoman函数，接受具体的展示组件，然后判断是否是女性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const judgeWoman = (Component) =&gt; &#123;</span><br><span class="line">  const NewComponent = (props) =&gt; &#123;</span><br><span class="line">    // 判断是否是女性用户</span><br><span class="line">    let isWoman = Math.random() &gt; 0.5 ? true : false</span><br><span class="line">    if (isWoman) &#123;</span><br><span class="line">      const allProps = &#123; add: &apos;高阶组件增加的属性&apos;, ...props &#125;</span><br><span class="line">      return &lt;Component &#123;...allProps&#125; /&gt;;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      return &lt;span&gt;女士专用，男士无权浏览&lt;/span&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return NewComponent;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>再将List和ShoppingCart两个组件作为参数传入这个函数。至此，我们就得到了两个加强过的组件WithList和WithShoppingCart。判断是否是女性的这段逻辑得到了复用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">const List = (props) =&gt; &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;div&gt;女士列表页&lt;/div&gt;</span><br><span class="line">      &lt;div&gt;&#123;props.add&#125;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line">const WithList = judgeWoman(List)</span><br><span class="line"></span><br><span class="line">const ShoppingCart = (props) =&gt; &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;div&gt;女士购物页&lt;/div&gt;</span><br><span class="line">      &lt;div&gt;&#123;props.add&#125;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line">const WithShoppingCart = judgeWoman(ShoppingCart)</span><br></pre></td></tr></table></figure>
+<p>上面是一个简单的例子，我们还可以给这个函数传入多个组件。比如我们传入两个组件，第一个是女性看到的组件，第二个是男性看到的组件。可复用性是不是更强大了呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const judgeWoman = (Woman,Man) =&gt; &#123;</span><br><span class="line">  const NewComponent = (props) =&gt; &#123;</span><br><span class="line">    // 判断是否是女性用户</span><br><span class="line">    let isWoman = Math.random() &gt; 0.5 ? true : false</span><br><span class="line">    if (isWoman) &#123;</span><br><span class="line">      const allProps = &#123; add: &apos;高阶组件增加的属性&apos;, ...props &#125;</span><br><span class="line">      return &lt;Woman &#123;...allProps&#125; /&gt;;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      return &lt;Man/&gt;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return NewComponent;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>更为强大的是，由于函数返回的也是组件，那么高阶组件是可以嵌套进行使用的！比如我们先判断女性，再判断年龄。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const withComponet =judgeAge(judgeWoman(ShoppingCart))</span><br></pre></td></tr></table></figure>
+<p>具体代码可见<a href="https://github.com/imalextu/learn-react-patterns/tree/master/src/pattern2" target="_blank" rel="noopener">src/pattern2</a></p>
+<h3 id="模式所解决的问题-1"><a href="#模式所解决的问题-1" class="headerlink" title="模式所解决的问题"></a>模式所解决的问题</h3><p>同样的逻辑我们总不能重复写多次。高阶组件起到了抽离共通逻辑的作用。同时高阶组件的嵌套使用使得代码复用更加灵活了。</p>
+<p>react-redux就使用了该模式，看到下面的代码，是不是感觉很熟悉。connect(mapStateToProps, mapDispatchToProps)生成了高阶组件函数，该函数接受TodoList作为参数。最后返回了VisibleTodoList这个高阶组件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import &#123; connect &#125; from &apos;react-redux&apos;</span><br><span class="line"></span><br><span class="line">const VisibleTodoList = connect(</span><br><span class="line">  mapStateToProps,</span><br><span class="line">  mapDispatchToProps</span><br><span class="line">)(TodoList)</span><br></pre></td></tr></table></figure>
+<h3 id="使用注意事项"><a href="#使用注意事项" class="headerlink" title="使用注意事项"></a>使用注意事项</h3><p>高阶组件虽好，我们使用起来却要注意如下点。</p>
+<ol>
+<li>包装显示名称以便轻松调试</li>
+</ol>
+<p>使用高阶组件后debug会比较麻烦。当 React 渲染出错的时候，靠组件的 displayName 静态属性来判断出错的组件类。HOC 创建的容器组件会与任何其他组件一样，会显示在 React Developer Tools 中。为了方便调试，我们需要选择一个显示名称，以表明它是 HOC 的产物。</p>
+<p>最常见的方式是用 HOC 包住被包装组件的显示名称。比如高阶组件名为 withSubscription，并且被包装组件的显示名称为 CommentList，显示名称应该为 WithSubscription(CommentList)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function withSubscription(WrappedComponent) &#123;</span><br><span class="line">  class WithSubscription extends React.Component &#123;/* ... */&#125;</span><br><span class="line">  WithSubscription.displayName = `WithSubscription($&#123;getDisplayName(WrappedComponent)&#125;)`;</span><br><span class="line">  return WithSubscription;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function getDisplayName(WrappedComponent) &#123;</span><br><span class="line">  return WrappedComponent.displayName || WrappedComponent.name || &apos;Component&apos;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>不要在 render 方法中使用 HOC</li>
+</ol>
+<p>React 的 diff 算法（称为协调）使用组件标识来确定它是应该更新现有子树还是将其丢弃并挂载新子树。 如果从 render 返回的组件与前一个渲染中的组件相同（===），则 React 通过将子树与新子树进行区分来递归更新子树。 如果它们不相等，则完全卸载前一个子树。</p>
+<p>通常，你不需要考虑这点。但对 HOC 来说这一点很重要，因为这代表着你不应在组件的 render 方法中对一个组件应用 HOC：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">  // 每次调用 render 函数都会创建一个新的 EnhancedComponent</span><br><span class="line">  // EnhancedComponent1 !== EnhancedComponent2</span><br><span class="line">  const EnhancedComponent = enhance(MyComponent);</span><br><span class="line">  // 这将导致子树每次渲染都会进行卸载，和重新挂载的操作！</span><br><span class="line">  return &lt;EnhancedComponent /&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这不仅仅是性能问题 - 重新挂载组件会导致该组件及其所有子组件的状态丢失。</p>
+<p>如果在组件之外创建 HOC，这样一来组件只会创建一次。因此，每次 render 时都会是同一个组件。一般来说，这跟你的预期表现是一致的。</p>
+<p>在极少数情况下，你需要动态调用 HOC。你可以在组件的生命周期方法或其构造函数中进行调用。</p>
+<ol start="3">
+<li>务必复制静态方法</li>
+</ol>
+<p>有时在 React 组件上定义静态方法很有用。例如，Relay 容器暴露了一个静态方法 getFragment 以方便组合 GraphQL 片段。</p>
+<p>但是，当你将 HOC 应用于组件时，原始组件将使用容器组件进行包装。这意味着新组件没有原始组件的任何静态方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 定义静态函数</span><br><span class="line">WrappedComponent.staticMethod = function() &#123;/*...*/&#125;</span><br><span class="line">// 现在使用 HOC</span><br><span class="line">const EnhancedComponent = enhance(WrappedComponent);</span><br><span class="line"></span><br><span class="line">// 增强组件没有 staticMethod</span><br><span class="line">typeof EnhancedComponent.staticMethod === &apos;undefined&apos; // true</span><br></pre></td></tr></table></figure>
+<p>为了解决这个问题，你可以在返回之前把这些方法拷贝到容器组件上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function enhance(WrappedComponent) &#123;</span><br><span class="line">  class Enhance extends React.Component &#123;/*...*/&#125;</span><br><span class="line">  // 必须准确知道应该拷贝哪些方法 :(</span><br><span class="line">  Enhance.staticMethod = WrappedComponent.staticMethod;</span><br><span class="line">  return Enhance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但要这样做，你需要知道哪些方法应该被拷贝。你可以使用 hoist-non-react-statics 自动拷贝所有非 React 静态方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import hoistNonReactStatic from &apos;hoist-non-react-statics&apos;;</span><br><span class="line">function enhance(WrappedComponent) &#123;</span><br><span class="line">  class Enhance extends React.Component &#123;/*...*/&#125;</span><br><span class="line">  hoistNonReactStatic(Enhance, WrappedComponent);</span><br><span class="line">  return Enhance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>除了导出组件，另一个可行的方案是再额外导出这个静态方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 使用这种方式代替...</span><br><span class="line">MyComponent.someFunction = someFunction;</span><br><span class="line">export default MyComponent;</span><br><span class="line"></span><br><span class="line">// ...单独导出该方法...</span><br><span class="line">export &#123; someFunction &#125;;</span><br><span class="line"></span><br><span class="line">// ...并在要使用的组件中，import 它们</span><br><span class="line">import MyComponent, &#123; someFunction &#125; from &apos;./MyComponent.js&apos;;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>Refs 不会被传递</li>
+</ol>
+<p>虽然高阶组件的约定是将所有 props 传递给被包装组件，但这对于 refs 并不适用。那是因为 ref 实际上并不是一个 prop - 就像 key 一样，它是由 React 专门处理的。如果将 ref 添加到 HOC 的返回组件中，则 ref 引用指向容器组件，而不是被包装组件。</p>
+<p>这个问题的解决方案是通过使用 React.forwardRef API（React 16.3 中引入）。</p>
+<h2 id="render-props"><a href="#render-props" class="headerlink" title="render props"></a>render props</h2><h3 id="概念介绍-2"><a href="#概念介绍-2" class="headerlink" title="概念介绍"></a>概念介绍</h3><p>术语 “render prop” 是指一种在 React 组件之间使用一个值为函数的 prop 共享代码的简单技术。</p>
+<p>同高阶组件一样，render props的引入也是为了解决复用业务逻辑。同高阶组件中举的例子一样，我们看看在使用render pros要如何使用。</p>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><p>我们用render props把上一节的例子重新实现一遍。</p>
+<p>具有 render prop 的组件预期子组件是一个函数，它所做的就是把子组件当做函数调用，调用参数就是传入的 props，然后把返回结果渲染出来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Provider&gt;</span><br><span class="line">  &#123;props =&gt; &lt;List add=&#123;props.add&#125; /&gt;&#125;</span><br><span class="line">&lt;/Provider&gt;</span><br></pre></td></tr></table></figure>
+<p>我们具体看下Provider组件是如何定义的。通过这段代码props.children(allProps)，我们调用了传入的函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const Provider = (props) =&gt; &#123;</span><br><span class="line">  // 判断是否是女性用户</span><br><span class="line">  let isWoman = Math.random() &gt; 0.5 ? true : false</span><br><span class="line">  if (isWoman) &#123;</span><br><span class="line">    const allProps = &#123; add: &apos;高阶组件增加的属性&apos;, ...props &#125;</span><br><span class="line">    return props.children(allProps)</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    return &lt;div&gt;女士专用，男士无权浏览&lt;/div&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好像render props能做的高阶组件也都能做到啊，而且高阶组件更容易理解，是否render props没啥用呢？我们来看一下render props更强大的一个点：对于新增的 props 更加灵活。<br>假设我们的List组件接受的是plus属性，ShoppingCart组件接受的是add属性，我们可以直接这样写，无需变动List组件以及Provider本身。使用高阶组件达到相同效果就要复杂很多。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;Provider&gt;</span><br><span class="line">  &#123;props =&gt; &#123;</span><br><span class="line">    const &#123; add &#125; = props</span><br><span class="line">    return &lt; List plus=&#123;add&#125; /&gt;</span><br><span class="line">  &#125;&#125;</span><br><span class="line">&lt;/Provider&gt;</span><br><span class="line"></span><br><span class="line">&lt;Provider&gt;</span><br><span class="line">  &#123;props =&gt; &lt;ShoppingCart add=&#123;props.add&#125; /&gt;&#125;</span><br><span class="line">&lt;/Provider&gt;</span><br></pre></td></tr></table></figure>
+<p>对于render props的使用可以不局限在利用children。完全可以使用Provider的普通属性达到相同效果，比如我们用test这个prop实现上面相同的效果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">const Provider = (props) =&gt; &#123;</span><br><span class="line">  // 判断是否是女性用户</span><br><span class="line">  let isWoman = Math.random() &gt; 0.5 ? true : false</span><br><span class="line">  if (isWoman) &#123;</span><br><span class="line">    const allProps = &#123; add: &apos;高阶组件增加的属性&apos;, ...props &#125;</span><br><span class="line">    return props.test(allProps)</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    return &lt;div&gt;女士专用，男士无权浏览&lt;/div&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">const ExampleRenderProps = () =&gt; &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;Provider test=&#123;props =&gt; &lt;List add=&#123;props.add&#125; /&gt;&#125; /&gt;</span><br><span class="line"></span><br><span class="line">      &lt;Provider test=&#123;props =&gt; &lt;ShoppingCart add=&#123;props.add&#125; /&gt;&#125; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体代码可见<a href="https://github.com/imalextu/learn-react-patterns/tree/master/src/pattern3" target="_blank" rel="noopener">src/pattern3</a></p>
+<h3 id="模式所解决的问题-2"><a href="#模式所解决的问题-2" class="headerlink" title="模式所解决的问题"></a>模式所解决的问题</h3><p>和高阶组件一样，render props起到了抽离共通逻辑的作用。同时render props可以高度定制传入组件所需要的属性。</p>
+<p>我们熟悉的react router以及我们下一篇将要介绍的context模式都有使用render props。</p>
+<h3 id="使用注意事项-1"><a href="#使用注意事项-1" class="headerlink" title="使用注意事项"></a>使用注意事项</h3><ol>
+<li>将 Render Props 与 React.PureComponent 一起使用时要小心</li>
+</ol>
+<p>如果你在Provider属性中创建函数，那么使用 render prop 会抵消使用 React.PureComponent 带来的优势。因为浅比较 props 的时候总会得到 false，并且在这种情况下每一个 render 对于 render prop 将会生成一个新的值。</p>
+<p>例如，继续我们之前使用的 <list> 组件，如果 List 继承自 React.PureComponent 而不是 React.Component，我们的例子看起来就像这样：</list></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class ExampleRenderProps extends React.Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &#123;/*</span><br><span class="line">            这是不好的！</span><br><span class="line">            每个渲染的 `test` prop的值将会是不同的。</span><br><span class="line">        */&#125;</span><br><span class="line">        &lt;Provider test=&#123;props =&gt; &lt;List add=&#123;props.add&#125; /&gt;&#125; /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这样例子中，每次 <examplerenderprops> 渲染，它会生成一个新的函数作为 <list test=""> 的 prop，因而在同时也抵消了继承自 React.PureComponent 的 <list> 组件的效果！</list></list></examplerenderprops></p>
+<p>为了绕过这一问题，有时你可以定义一个 prop 作为实例方法，类似这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class ExampleRenderProps extends React.Component &#123;</span><br><span class="line">  renderList=()=&gt;&#123;</span><br><span class="line">    return &lt;List add=&#123;props.add&#125; /&gt;</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;Provider test=&#123;this.renderList&#125; /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你无法静态定义 prop（例如，因为你需要关闭组件的props和/或state），则List应该扩展自React.Component。</p>
+<h2 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h2><p>其实要说的在react官方文档基本都能看到，但官方文档组织稍显凌乱。读者也可在读完这篇文章后具体去查找相应官方教程。</p>
+<hr>
+<p>参考链接:</p>
+<ul>
+<li><a href="https://react.docschina.org/docs/context.html" target="_blank" rel="noopener">react官方文档</a></li>
+<li><a href="https://levelup.gitconnected.com/react-component-patterns-ab1f09be2c82" target="_blank" rel="noopener">React Component Patterns</a></li>
+<li><a href="https://juejin.im/book/5ba42844f265da0a8a6aa5e9" target="_blank" rel="noopener">React实战：设计模式和最佳实践</a></li>
+<li><a href="https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0" target="_blank" rel="noopener">Presentational and Container Components</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Alex Tu 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Alex Tu 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+            <a href="/tags/react/" rel="tag"># react</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/27/js中遍历对象属性以及数组的方法总结/" rel="next" title="js中遍历对象属性以及数组的方法总结">
+                <i class="fa fa-chevron-left"></i> js中遍历对象属性以及数组的方法总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/27/react设计模式(下)/" rel="prev" title="你要知道的react组件设计模式,都在这了(上)">
+                你要知道的react组件设计模式,都在这了(上) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Alex Tu">
+            
+              <p class="site-author-name" itemprop="name">Alex Tu</p>
+              <p class="site-description motion-element" itemprop="description">欢迎光临| ᐕ)୨</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/imalextu" title="GitHub &rarr; https://github.com/imalextu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:imalextu@gmail.com" title="E-Mail &rarr; mailto:imalextu@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#容器-Container-与-展示-Presentational-组件"><span class="nav-number">1.</span> <span class="nav-text">容器(Container) 与 展示(Presentational) 组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念介绍"><span class="nav-number">1.1.</span> <span class="nav-text">概念介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">1.2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模式所解决的问题"><span class="nav-number">1.3.</span> <span class="nav-text">模式所解决的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高阶组件"><span class="nav-number">2.</span> <span class="nav-text">高阶组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念介绍-1"><span class="nav-number">2.1.</span> <span class="nav-text">概念介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例-1"><span class="nav-number">2.2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模式所解决的问题-1"><span class="nav-number">2.3.</span> <span class="nav-text">模式所解决的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用注意事项"><span class="nav-number">2.4.</span> <span class="nav-text">使用注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#render-props"><span class="nav-number">3.</span> <span class="nav-text">render props</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念介绍-2"><span class="nav-number">3.1.</span> <span class="nav-text">概念介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例-2"><span class="nav-number">3.2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模式所解决的问题-2"><span class="nav-number">3.3.</span> <span class="nav-text">模式所解决的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用注意事项-1"><span class="nav-number">3.4.</span> <span class="nav-text">使用注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾声"><span class="nav-number">4.</span> <span class="nav-text">尾声</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-fas fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alex Tu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script>
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'nXAFoCrF92Scei8pTgjnrYKp-gzGzoHsz',
+        appKey: 'R0sA3gB3zdpVbd4BF6V8cOa0',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

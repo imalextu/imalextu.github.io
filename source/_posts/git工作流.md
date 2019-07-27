@@ -2,12 +2,15 @@
 title: git工作流
 date: 2019-06-18 22:18:43
 tags:
+- git
+- 前端工程化
+categories: tech
 ---
 # git工作流
 先介绍一下业务背景，我们的项目由四五个同学同步进行开发，难免会出现代码冲突，由此设计了这一套分支管理方案。该方案基于[git分支管理最佳实践](http://nvie.com/posts/a-successful-git-branching-model/)。
 
 如有分支管理优化意见，欢迎**共同探讨**。
-
+<!-- more -->
 ### 分支类型
 * master
   - 主分支，提供发布的稳定版。
